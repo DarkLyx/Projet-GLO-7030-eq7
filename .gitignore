@@ -1,0 +1,29 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv
+venv/
+ENV/
+
+# --- Données (Dataset & Prétraitement) ---
+# On ne versionne pas les images brutes ni les images traitées
+data/
+data_split/
+data_preprocessed/
+
+# --- Résultats & Modèles ---
+# On ignore les poids des modèles (.pth, .h5) et les logs
+results/checkpoints/*.pth
+results/logs/
+*.log
+
+# --- Environnement & IDE ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Kaggle ---
+.kaggle/
+kaggle.json
