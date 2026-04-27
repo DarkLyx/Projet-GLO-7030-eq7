@@ -4,7 +4,7 @@ import os
 from tqdm import tqdm
 
 from utils.data_loader import get_dataloaders
-from DL_approaches.baselines import build_model
+from DL_approaches.model_factory import build_model
 from metrics.evaluator import ModelEvaluator
 import config as cfg
 

@@ -6,10 +6,11 @@ from tqdm import tqdm
 from utils.data_loader import get_dataloaders
 from utils.visualizer import plot_training_history
 from utils.complexity import compute_model_complexity 
-from DL_approaches.baselines import build_model, get_optimizer
+from DL_approaches.model_factory import build_model, get_optimizer
 import config as cfg
 
 def run_training():
+    print(torch.__version__)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"🚀 Lancement de l'entraînement sur : {device}")
 

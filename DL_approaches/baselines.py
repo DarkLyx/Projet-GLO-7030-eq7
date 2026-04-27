@@ -30,7 +30,7 @@ def get_resnet_baseline(num_classes=5):
     model.fc = nn.Linear(num_ftrs, num_classes)
     return model
 
-def build_model():
+def build_baselines_model():
     num_classes = cfg.NUM_CLASSES         
     model_name = cfg.MODEL_NAME         
     
@@ -40,17 +40,3 @@ def build_model():
         return get_resnet_baseline(num_classes=num_classes)
     else:
         raise ValueError(f"Modèle {model_name} non reconnu.")
-
-def get_optimizer(model):
-    opt_name = cfg.OPTIMIZER.lower()      
-    lr = cfg.LEARNING_RATE               
-    weight_decay = cfg.WEIGHT_DECAY      
-
-    if opt_name == 'adam':
-        return optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
-    elif opt_name == 'adamw':
-        return optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
-    elif opt_name == 'sgd':
-        return optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=weight_decay)
-    else:
-        raise ValueError(f"Optimiseur {opt_name} non supporté.")

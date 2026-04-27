@@ -1,7 +1,7 @@
-MODE = "eval" 
+MODE = "train" 
 
-APPROACH = "baseline"
-MODEL_NAME = "custom_cnn" 
+APPROACH = "hybrids"
+MODEL_NAME = "maxvit_t" 
 
 TASK = "all" 
 

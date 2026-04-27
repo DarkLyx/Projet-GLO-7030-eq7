@@ -27,6 +27,14 @@ def main():
         if cfg.APPROACH == "baseline":
             print(f">> Running Convolutional Neural Network ({cfg.MODEL_NAME}) approach...")
             run_training()
+
+        elif cfg.APPROACH == "transformers":
+            print(f">> Running Vision Transformer ({cfg.MODEL_NAME}) approach...")
+            run_training()
+
+        elif cfg.APPROACH == "hybrids":
+            print(f">> Running Hybrids Models ({cfg.MODEL_NAME}) approach...")
+            run_training()
             
         elif cfg.APPROACH == "kan":
             print(">> Running Vision KAN (Kolmogorov-Arnold Networks) approach...")
