@@ -38,6 +38,7 @@ def main():
             
         elif cfg.APPROACH == "kan":
             print(">> Running Vision KAN (Kolmogorov-Arnold Networks) approach...")
+            run_training()
             
         elif cfg.APPROACH == "mamba":
             print(">> Running State Space Models (Mamba) approach...")

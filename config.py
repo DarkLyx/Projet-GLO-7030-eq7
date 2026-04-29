@@ -1,7 +1,7 @@
 MODE = "train" 
 
-APPROACH = "hybrids"
-MODEL_NAME = "maxvit_t" 
+APPROACH = "kan"
+MODEL_NAME = "vision_kan" 
 
 TASK = "all" 
 

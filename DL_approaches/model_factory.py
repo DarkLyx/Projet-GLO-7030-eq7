@@ -3,6 +3,7 @@ import config as cfg
 from DL_approaches.baselines import build_baselines_model
 from DL_approaches.transformers import build_transformer_model
 from DL_approaches.hybrids import build_hybrid_model
+from DL_approaches.kan import build_kan_model
 
 def build_model():
 
@@ -18,7 +19,7 @@ def build_model():
         return build_hybrid_model()
         
     elif approach == "kan":
-        raise NotImplementedError("Le modèle KAN n'est pas encore implémenté.")
+        return build_kan_model()
         
     elif approach == "mamba":
         raise NotImplementedError("Le modèle Mamba n'est pas encore implémenté.")
