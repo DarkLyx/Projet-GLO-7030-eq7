@@ -4,6 +4,7 @@ from DL_approaches.baselines import build_baselines_model
 from DL_approaches.transformers import build_transformer_model
 from DL_approaches.hybrids import build_hybrid_model
 from DL_approaches.kan import build_kan_model
+from DL_approaches.ssm import build_ssm_model
 
 def build_model():
 
@@ -21,8 +22,8 @@ def build_model():
     elif approach == "kan":
         return build_kan_model()
         
-    elif approach == "mamba":
-        raise NotImplementedError("Le modèle Mamba n'est pas encore implémenté.")
+    elif approach == "ssm":
+        return build_ssm_model()
         
     else:
         raise ValueError(f"Approche non reconnue : {approach}")

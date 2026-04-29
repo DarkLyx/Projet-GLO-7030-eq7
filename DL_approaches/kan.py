@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import config as cfg
 
+#Luigos pense bien à installer le repo github du ImportError sur ICE
+
 # On importe la couche KAN linéaire (à installer via la communauté)
 try:
     from efficient_kan import KAN as KANLinear

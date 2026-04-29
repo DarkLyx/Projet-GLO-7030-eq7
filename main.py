@@ -40,12 +40,13 @@ def main():
             print(">> Running Vision KAN (Kolmogorov-Arnold Networks) approach...")
             run_training()
             
-        elif cfg.APPROACH == "mamba":
+        elif cfg.APPROACH == "ssm":
             print(">> Running State Space Models (Mamba) approach...")
+            run_training()
             
         else:
             print(f"ERROR: The approach '{cfg.APPROACH}' is unknown for training.")
-            print("Please use 'baseline', 'kan', or 'mamba'.")
+            print("Please use 'baseline', 'transformers', 'hybrids', 'kan', or 'ssm'.")
 
     elif cfg.MODE == "eval":
         print(">> Running evaluation and generating confusion matrix...")
