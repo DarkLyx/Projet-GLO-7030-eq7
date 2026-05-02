@@ -1,0 +1,178 @@
+\section{Résultats et discussion}
+\label{sec:resultats}
+
+Cette section présente les résultats obtenus pour chaque architecture évaluée
+lors de la Phase~1 (benchmarking). Pour chaque modèle, nous reportons les
+courbes d'entraînement (perte et précision), la matrice de confusion sur
+l'ensemble de test, ainsi que le rapport de performance détaillé
+(Accuracy, Recall, F1-Score, AUC-ROC, et métriques par classe).
+
+%====================================================================
+\subsection{Baseline : CNN personnalisé (\texttt{custom\_cnn})}
+\label{subsec:baseline_custom_cnn}
+
+\begin{figure}[H]
+    \centering
+    \figIfExists[\linewidth]{./plots/training_history_baseline_custom_cnn.png}
+    \caption{Courbes d'entraînement --- \texttt{baseline / custom\_cnn}.}
+    \label{fig:hist_baseline_custom_cnn}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \figIfExists[0.85\linewidth]{./plots/confusion_matrix_baseline_custom_cnn.png}
+    \caption{Matrice de confusion --- \texttt{baseline / custom\_cnn}.}
+    \label{fig:cm_baseline_custom_cnn}
+\end{figure}
+
+\inputIfExists{./tab/perf_report_baseline_custom_cnn.tex}
+
+\textit{Discussion : à compléter (comportement de la convergence, classes
+les plus confondues, écart train/val, etc.).}
+
+%====================================================================
+\subsection{Baseline : ResNet-18 (\texttt{resnet18})}
+\label{subsec:baseline_resnet18}
+
+\begin{figure}[H]
+    \centering
+    \figIfExists[\linewidth]{./plots/training_history_baseline_resnet18.png}
+    \caption{Courbes d'entraînement --- \texttt{baseline / resnet18}.}
+    \label{fig:hist_baseline_resnet18}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \figIfExists[0.85\linewidth]{./plots/confusion_matrix_baseline_resnet18.png}
+    \caption{Matrice de confusion --- \texttt{baseline / resnet18}.}
+    \label{fig:cm_baseline_resnet18}
+\end{figure}
+
+\inputIfExists{./tab/perf_report_baseline_resnet18.tex}
+
+\textit{Discussion : à compléter (apport du préentraînement ImageNet,
+gain par rapport au CNN \emph{from scratch}, etc.).}
+
+%====================================================================
+\subsection{Transformer : ViT-B/16 (\texttt{vit\_b\_16})}
+\label{subsec:transformers_vit_b_16}
+
+\begin{figure}[H]
+    \centering
+    \figIfExists[\linewidth]{./plots/training_history_transformers_vit_b_16.png}
+    \caption{Courbes d'entraînement --- \texttt{transformers / vit\_b\_16}.}
+    \label{fig:hist_transformers_vit_b_16}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \figIfExists[0.85\linewidth]{./plots/confusion_matrix_transformers_vit_b_16.png}
+    \caption{Matrice de confusion --- \texttt{transformers / vit\_b\_16}.}
+    \label{fig:cm_transformers_vit_b_16}
+\end{figure}
+
+\inputIfExists{./tab/perf_report_transformers_vit_b_16.tex}
+
+\textit{Discussion : à compléter (efficacité de l'attention globale,
+sensibilité à la taille du jeu de données, etc.).}
+
+%====================================================================
+\subsection{Transformer : Swin-T (\texttt{swin\_t})}
+\label{subsec:transformers_swin_t}
+
+\begin{figure}[H]
+    \centering
+    \figIfExists[\linewidth]{./plots/training_history_transformers_swin_t.png}
+    \caption{Courbes d'entraînement --- \texttt{transformers / swin\_t}.}
+    \label{fig:hist_transformers_swin_t}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \figIfExists[0.85\linewidth]{./plots/confusion_matrix_transformers_swin_t.png}
+    \caption{Matrice de confusion --- \texttt{transformers / swin\_t}.}
+    \label{fig:cm_transformers_swin_t}
+\end{figure}
+
+\inputIfExists{./tab/perf_report_transformers_swin_t.tex}
+
+\textit{Discussion : à compléter (apport des fenêtres décalées,
+hiérarchie multi-échelle, etc.).}
+
+%====================================================================
+\subsection{Hybride : MaxViT-T (\texttt{maxvit\_t})}
+\label{subsec:hybrids_maxvit_t}
+
+\begin{figure}[H]
+    \centering
+    \figIfExists[\linewidth]{./plots/training_history_hybrids_maxvit_t.png}
+    \caption{Courbes d'entraînement --- \texttt{hybrids / maxvit\_t}.}
+    \label{fig:hist_hybrids_maxvit_t}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \figIfExists[0.85\linewidth]{./plots/confusion_matrix_hybrids_maxvit_t.png}
+    \caption{Matrice de confusion --- \texttt{hybrids / maxvit\_t}.}
+    \label{fig:cm_hybrids_maxvit_t}
+\end{figure}
+
+\inputIfExists{./tab/perf_report_hybrids_maxvit_t.tex}
+
+\textit{Discussion : à compléter (complémentarité conv + attention,
+coût computationnel comparé à un ViT pur, etc.).}
+
+%====================================================================
+\subsection{SSM : Vision Mamba (\texttt{vision\_mamba})}
+\label{subsec:ssm_vision_mamba}
+
+\begin{figure}[H]
+    \centering
+    \figIfExists[\linewidth]{./plots/training_history_ssm_vision_mamba.png}
+    \caption{Courbes d'entraînement --- \texttt{ssm / vision\_mamba}.}
+    \label{fig:hist_ssm_vision_mamba}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \figIfExists[0.85\linewidth]{./plots/confusion_matrix_ssm_vision_mamba.png}
+    \caption{Matrice de confusion --- \texttt{ssm / vision\_mamba}.}
+    \label{fig:cm_ssm_vision_mamba}
+\end{figure}
+
+\inputIfExists{./tab/perf_report_ssm_vision_mamba.tex}
+
+\textit{Discussion : à compléter (complexité linéaire vs. quadratique
+de l'attention, stabilité de l'entraînement, etc.).}
+
+%====================================================================
+\subsection{KAN : Vision KAN (\texttt{vision\_kan})}
+\label{subsec:kan_vision_kan}
+
+\begin{figure}[H]
+    \centering
+    \figIfExists[\linewidth]{./plots/training_history_kan_vision_kan.png}
+    \caption{Courbes d'entraînement --- \texttt{kan / vision\_kan}.}
+    \label{fig:hist_kan_vision_kan}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \figIfExists[0.85\linewidth]{./plots/confusion_matrix_kan_vision_kan.png}
+    \caption{Matrice de confusion --- \texttt{kan / vision\_kan}.}
+    \label{fig:cm_kan_vision_kan}
+\end{figure}
+
+\inputIfExists{./tab/perf_report_kan_vision_kan.tex}
+
+\textit{Discussion : à compléter (apport des fonctions de Kolmogorov-Arnold,
+expressivité par paramètre, etc.).}
+
+%====================================================================
+\subsection{Synthèse comparative}
+\label{subsec:synthese}
+
+\textit{Discussion globale à compléter : tableau récapitulatif
+(Accuracy, F1, AUC-ROC, \#params, FLOPs) sur l'ensemble des modèles,
+choix de l'architecture retenue pour la Phase~2 et justification
+(compromis précision / coût / généralisation).}

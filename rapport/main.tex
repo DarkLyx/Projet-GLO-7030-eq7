@@ -16,6 +16,11 @@
 \usepackage{float}
 \usepackage{booktabs}
 
+\usepackage{chngcntr}
+\counterwithin{table}{section}
+\counterwithin{figure}{section}
+
+
 % Titres de sections non-justifiés (évite les espaces étirés en mode colonne)
 \usepackage[raggedright]{titlesec}
 
@@ -84,11 +89,11 @@
 {\large Préparé par (Équipe 7)}\\[0.4cm]
 
 \begin{tabular}{l}
-\texttt{\Large Lucas Gumuchian} \\[0.2cm]
 \texttt{\Large Luigi Giusiano} \\[0.2cm]
+\texttt{\Large Lucas Gumuchian} \\[0.2cm]
 \texttt{\Large Marc-Antoine Samson} \\[0.2cm]
-\texttt{\Large Karim Mehour} \\[0.2cm]
-\texttt{\Large Robin Métais} \\
+\texttt{\Large Robin Métais} \\[0.2cm]
+\texttt{\Large Karim Mehour} \\
 \end{tabular}
 
 \vfill
@@ -110,3 +115,4 @@
 \bibliography{sample}
 
 \end{document}
+
