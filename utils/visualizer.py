@@ -1,6 +1,7 @@
 # Fichier : utils/visualizer.py
 
 import matplotlib.pyplot as plt
+import config as cfg
 import os
 
 def plot_training_history(train_losses, val_losses, train_accs, val_accs, save_dir):
@@ -26,7 +27,7 @@ def plot_training_history(train_losses, val_losses, train_accs, val_accs, save_d
     ax2.grid(True)
 
     plt.tight_layout()
-    save_path = os.path.join(save_dir, 'training_history.png')
+    save_path = os.path.join(save_dir, f'training_history_{cfg.APPROACH}_{cfg.MODEL_NAME}.png')
     plt.savefig(save_path)
     plt.close()
     print(f"Graphique d'entraînement sauvegardé sous : {save_path}")
