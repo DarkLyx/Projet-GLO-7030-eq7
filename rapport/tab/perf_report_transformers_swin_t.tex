@@ -1,0 +1,35 @@
+\begin{table}[H]
+\centering
+\caption{Rapport de performance --- Approche : \texttt{transformers}, Modèle : \texttt{swin_t}}
+\label{tab:perf_transformers_swin_t}
+\adjustbox{max width=\linewidth}{%
+\begin{tabular}{lr}
+\toprule
+Métrique & Valeur \\
+\midrule
+Accuracy & 0.9504 \\
+Recall (pondéré) & 0.9504 \\
+F1-Score (pondéré) & 0.9503 \\
+AUC-ROC (OVR) & 0.9966 \\
+\bottomrule
+\end{tabular}
+}
+\vspace{0.4cm}
+
+\adjustbox{max width=\linewidth}{%
+\begin{tabular}{lrrrr}
+\toprule
+ & Précision & Rappel & F1 & Support \\
+Classe &  &  &  &  \\
+\midrule
+colon\_aca & 0.9854 & 0.9480 & 0.9664 & 500.0000 \\
+colon\_n & 0.9686 & 0.9880 & 0.9782 & 500.0000 \\
+lung\_aca & 0.8904 & 0.9260 & 0.9078 & 500.0000 \\
+lung\_n & 0.9784 & 0.9980 & 0.9881 & 500.0000 \\
+lung\_scc & 0.9311 & 0.8920 & 0.9111 & 500.0000 \\
+Macro avg & 0.9508 & 0.9504 & 0.9503 & 2500.0000 \\
+Weighted avg & 0.9508 & 0.9504 & 0.9503 & 2500.0000 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
