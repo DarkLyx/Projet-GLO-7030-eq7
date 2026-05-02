@@ -15,6 +15,7 @@
 
 \usepackage{float}
 \usepackage{booktabs}
+\usepackage{adjustbox}
 
 \usepackage{chngcntr}
 \counterwithin{table}{section}
@@ -27,7 +28,16 @@
 % Fallback helpers: use a placeholder if the file does not yet exist
 \usepackage{url}
 \newcommand{\inputIfExists}[1]{%
-  \IfFileExists{#1}{\input{#1}}{%
+  \IfFileExists{#1}{%
+    \begingroup
+      % Wrap every tabular in the included file inside \resizebox{\linewidth}{!}{...}
+      \let\origtabular\tabular
+      \let\origendtabular\endtabular
+      \def\tabular{\resizebox{\linewidth}{!}\bgroup\origtabular}%
+      \def\endtabular{\origendtabular\egroup}%
+      \input{#1}%
+    \endgroup
+  }{%
     \begin{center}%
       \fbox{\parbox{\dimexpr0.85\linewidth-2\fboxsep-2\fboxrule\relax}{%
         \centering\textit{Tableau à venir :}\\\nolinkurl{#1}%

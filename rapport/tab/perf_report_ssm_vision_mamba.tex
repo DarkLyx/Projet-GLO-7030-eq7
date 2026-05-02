@@ -2,7 +2,7 @@
 \centering
 \caption{Rapport de performance --- Approche : \texttt{ssm}, Modèle : \texttt{vision_mamba}}
 \label{tab:perf_ssm_vision_mamba}
-\begin{tabular}{lr}
+\adjustbox{max width=\linewidth}{\begin{tabular}{lr}
 \toprule
 Métrique & Valeur \\
 \midrule
@@ -11,11 +11,11 @@ Recall (pondéré) & 0.9660 \\
 F1-Score (pondéré) & 0.9660 \\
 AUC-ROC (OVR) & 0.9984 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 
 \vspace{0.4cm}
 
-\begin{tabular}{lrrrr}
+\adjustbox{max width=\linewidth}{\begin{tabular}{lrrrr}
 \toprule
  & Précision & Rappel & F1 & Support \\
 Classe &  &  &  &  \\
@@ -28,5 +28,5 @@ lung\_scc & 0.9534 & 0.9420 & 0.9477 & 500.0000 \\
 Macro avg & 0.9662 & 0.9660 & 0.9660 & 2500.0000 \\
 Weighted avg & 0.9662 & 0.9660 & 0.9660 & 2500.0000 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}

@@ -61,14 +61,18 @@ class ModelEvaluator:
         tex_global = df_global.to_latex(index=False, float_format="%.4f", escape=True)
         tex_class = df_class.to_latex(float_format="%.4f", escape=True)
 
+        # Wrap each tabular in \adjustbox so it shrinks to column width when needed
+        # (but does not enlarge small tables). Requires \usepackage{adjustbox} in the report.
+        wrap = lambda t: "\\adjustbox{max width=\\linewidth}{%\n" + t.strip() + "\n}"
+
         tex = (
             "\\begin{table}[H]\n"
             "\\centering\n"
             f"\\caption{{{caption}}}\n"
             f"\\label{{{label}}}\n"
-            f"{tex_global}\n"
+            f"{wrap(tex_global)}\n"
             "\\vspace{0.4cm}\n\n"
-            f"{tex_class}"
+            f"{wrap(tex_class)}\n"
             "\\end{table}\n"
         )
 
