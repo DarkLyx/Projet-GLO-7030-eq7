@@ -1,0 +1,112 @@
+\documentclass[twocolumn]{article}
+
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\usepackage{float}
+\usepackage{booktabs}
+
+% Titres de sections non-justifiés (évite les espaces étirés en mode colonne)
+\usepackage[raggedright]{titlesec}
+
+% Fallback helpers: use a placeholder if the file does not yet exist
+\usepackage{url}
+\newcommand{\inputIfExists}[1]{%
+  \IfFileExists{#1}{\input{#1}}{%
+    \begin{center}%
+      \fbox{\parbox{\dimexpr0.85\linewidth-2\fboxsep-2\fboxrule\relax}{%
+        \centering\textit{Tableau à venir :}\\\nolinkurl{#1}%
+      }}%
+    \end{center}%
+  }%
+}
+\newcommand{\figIfExists}[2][\linewidth]{%
+  \IfFileExists{#2}{\includegraphics[width=#1]{#2}}{%
+    \fbox{\parbox{\dimexpr#1-2\fboxsep-2\fboxrule\relax}{%
+      \centering\vspace{1.2cm}\textit{Figure à venir :}\\\nolinkurl{#2}\vspace{1.2cm}%
+    }}%
+  }%
+}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\textbf{Page} \textbf{\thepage/\pageref{LastPage}}}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[R]{\today}
+
+\usepackage{xcolor}
+\definecolor{ulavalred}{RGB}{206,17,38}
+
+\begin{document}
+
+%%%
+\begin{titlepage}
+
+\centering
+
+\vspace*{2cm}
+
+\includegraphics[width=12cm]{ul_p.pdf}
+
+\vspace{2cm}
+
+{\Large\bfseries\color{ulavalred} GLO-7030}
+
+\vspace{0.3cm}
+
+\textbf{\LARGE{Apprentissage par réseaux de neurones profonds}}
+
+\vspace{0.8cm}
+
+\textcolor{ulavalred}{\rule{0.65\textwidth}{2pt}}
+
+\vspace{0.5cm}
+
+{\Huge\bfseries\color{ulavalred} PROJET DE SESSION}
+
+\vspace{0.2cm}
+
+\textcolor{ulavalred}{\rule{0.4\textwidth}{2pt}}
+
+\vfill
+
+{\large Préparé par (Équipe 7)}\\[0.4cm]
+
+\begin{tabular}{l}
+\texttt{\Large Lucas Gumuchian} \\[0.2cm]
+\texttt{\Large Luigi Giusiano} \\[0.2cm]
+\texttt{\Large Marc-Antoine Samson} \\[0.2cm]
+\texttt{\Large Karim Mehour} \\[0.2cm]
+\texttt{\Large Robin Métais} \\
+\end{tabular}
+
+\vfill
+
+{\normalsize Hiver 2026}
+
+\end{titlepage}
+%%%
+
+\include{sections/resume}
+\include{sections/introduction}
+\include{sections/etat_de_lart}
+\include{sections/approche}
+\include{sections/methodologie}
+\include{sections/resultats}
+\include{sections/conclusion}
+
+\bibliographystyle{alpha}
+\bibliography{sample}
+
+\end{document}
