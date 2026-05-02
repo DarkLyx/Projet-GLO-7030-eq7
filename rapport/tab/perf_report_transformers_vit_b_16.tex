@@ -1,0 +1,32 @@
+\begin{table}[H]
+\centering
+\caption{Rapport de performance --- Approche : \texttt{transformers}, Modèle : \texttt{vit_b_16}}
+\label{tab:perf_transformers_vit_b_16}
+\begin{tabular}{lr}
+\toprule
+Métrique & Valeur \\
+\midrule
+Accuracy & 0.9692 \\
+Recall (pondéré) & 0.9692 \\
+F1-Score (pondéré) & 0.9692 \\
+AUC-ROC (OVR) & 0.9981 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.4cm}
+
+\begin{tabular}{lrrrr}
+\toprule
+ & Précision & Rappel & F1 & Support \\
+Classe &  &  &  &  \\
+\midrule
+colon\_aca & 0.9959 & 0.9660 & 0.9807 & 500.0000 \\
+colon\_n & 0.9727 & 0.9960 & 0.9842 & 500.0000 \\
+lung\_aca & 0.9419 & 0.9400 & 0.9409 & 500.0000 \\
+lung\_n & 0.9980 & 0.9960 & 0.9970 & 500.0000 \\
+lung\_scc & 0.9386 & 0.9480 & 0.9433 & 500.0000 \\
+Macro avg & 0.9694 & 0.9692 & 0.9692 & 2500.0000 \\
+Weighted avg & 0.9694 & 0.9692 & 0.9692 & 2500.0000 \\
+\bottomrule
+\end{tabular}
+\end{table}
