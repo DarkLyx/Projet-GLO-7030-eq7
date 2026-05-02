@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
 import config as cfg
+from mamba_ssm import Mamba
+
 
 # LUIGI quand tu executeras ça sur ICE, pense bien à faire !pip install causal-conv1d mamba-ssm
 # impossible de tester sur mon pc, les install sont trop chiants à faire, mais sur ICE ça devrait rouler sans souci

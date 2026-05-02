@@ -1,7 +1,14 @@
+# Use 'download', 'preprocess', 'train', 'eval', or 'all'
 MODE = "train" 
 
-APPROACH = "kan"
-MODEL_NAME = "vision_kan" 
+# Valid APPROACH: MODEL_NAME...
+# baseline: custom_cnn, resnet18
+# hybrids: maxvit_t
+# transformers: vit_b_16, swin_t
+# kan: vision_kan
+# ssm: vision_mamba
+APPROACH = "transformers"
+MODEL_NAME = "swin_t" 
 
 TASK = "all" 
 
@@ -26,5 +33,5 @@ RAW_PATH = "data/"
 SPLIT_PATH = "data_split/"
 PROCESSED_PATH = "data_preprocessed/"
 
-LOG_DIR = "results/logs/"
+LOG_DIR = "rapport/plots/"
 CHECKPOINT_DIR = "results/checkpoints/"
