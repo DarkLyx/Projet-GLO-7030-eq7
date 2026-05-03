@@ -15,3 +15,12 @@ vision_mamba_OPTadam_WD0.0001,198.66K,38.74M
 vision_mamba_OPTadam_WD0.001,198.66K,38.74M
 vision_mamba_OPTadamw_WD0.0001,198.66K,38.74M
 vision_mamba_OPTadamw_WD0.001,198.66K,38.74M
+vision_mamba,198.66K,38.74M
+vit_b_16_OPTadam_WD0.0001,57.30M,11.29G
+vit_b_16_OPTadam_WD0.001,57.30M,11.29G
+vit_b_16_OPTadamw_WD0.0001,57.30M,11.29G
+vit_b_16_OPTadamw_WD0.001,57.30M,11.29G
+swin_t_OPTadam_WD0.0001,18.86M,2.98G
+swin_t_OPTadam_WD0.001,18.86M,2.98G
+swin_t_OPTadamw_WD0.0001,18.86M,2.98G
+swin_t_OPTadamw_WD0.001,18.86M,2.98G
