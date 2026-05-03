@@ -55,24 +55,23 @@ def main():
         run_evaluation()
 
     elif cfg.MODE == "grid_search":
-       for i, exp in enumerate(cfg.EXPERIMENTS_QUEUE):
-            # 1. Mise à jour des variables globales de config
+        for i, exp in enumerate(cfg.EXPERIMENTS_QUEUE):
+            # 1. On définit l'architecture actuelle pour TOUT le projet
             cfg.APPROACH = exp["approach"]
             cfg.MODEL_NAME = exp["model"]
 
-            print(f"\n🎬 EXPÉRIENCE {i+1}/{len(cfg.EXPERIMENTS_QUEUE)}")
-            print(f"🔹 Approche : {cfg.APPROACH} | Modèle : {cfg.MODEL_NAME}")
-            print("-" * 30)
+            print(f"\n" + "="*60)
+            print(f" ANALYSE : {cfg.MODEL_NAME} ({cfg.APPROACH})")
+            print(f"Modèle {i+1} sur {len(cfg.EXPERIMENTS_QUEUE)}")
+            print("="*60)
 
-            # 2. Lancement de l'entraînement
-            # On passe MODEL_NAME comme run_name pour que les fichiers soient bien nommés
+            # 2. On appelle le moteur de Grid Search. 
+            # Note : On ne passe PAS de run_name ici, car grid_search le génère lui-même.
             try:
-                run_grid_search(run_name=cfg.MODEL_NAME)
+                run_grid_search()
             except Exception as e:
-                print(f" Erreur sur {cfg.MODEL_NAME}: {e}")
-                continue # On passe au suivant si ça crash
-
-            print("\n Toutes les combinaisons ont été traitées.")
+                print(f" Erreur critique lors du Grid Search de {cfg.MODEL_NAME}: {e}")
+                continue 
 
     elif cfg.MODE == "all":
         print(">> Running full pipeline (Download -> Preprocess -> Train -> Eval)...")
