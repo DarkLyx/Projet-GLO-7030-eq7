@@ -51,7 +51,12 @@ def main():
             print("Please use 'baseline', 'transformers', 'hybrids', 'kan', or 'ssm'.")
 
     elif cfg.MODE == "eval":
-        for i, exp in enumerate(cfg.EXPERIMENTS_QUEUE):
+        print(">> Running evaluation and generating confusion matrix...")
+        run_evaluation()
+
+    elif cfg.MODE == "grid_search":
+       for i, exp in enumerate(cfg.EXPERIMENTS_QUEUE):
+            # 1. Mise à jour des variables globales de config
             cfg.APPROACH = exp["approach"]
             cfg.MODEL_NAME = exp["model"]
 
@@ -59,17 +64,15 @@ def main():
             print(f"🔹 Approche : {cfg.APPROACH} | Modèle : {cfg.MODEL_NAME}")
             print("-" * 30)
 
+            # 2. Lancement de l'entraînement
+            # On passe MODEL_NAME comme run_name pour que les fichiers soient bien nommés
             try:
                 run_training(run_name=cfg.MODEL_NAME)
             except Exception as e:
-                print(f"⚠️ Erreur sur {cfg.MODEL_NAME}: {e}")
-                continue 
+                print(f" Erreur sur {cfg.MODEL_NAME}: {e}")
+                continue # On passe au suivant si ça crash
 
-        print("\nToutes les combinaisons ont été traitées.")
-
-    elif cfg.MODE == "grid_search":
-        print(f">> Running Grid Search for ({cfg.MODEL_NAME})...")
-        run_grid_search()
+            print("\n Toutes les combinaisons ont été traitées.")
 
     elif cfg.MODE == "all":
         print(">> Running full pipeline (Download -> Preprocess -> Train -> Eval)...")
