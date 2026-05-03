@@ -3,10 +3,10 @@ import torch.nn.functional as F
 import os
 from tqdm import tqdm
 
-from utils.data_loader import get_dataloaders
-from DL_approaches.model_factory import build_model
-from metrics.evaluator import ModelEvaluator
-import config as cfg
+from src.data.data_loader import get_dataloaders
+from src.models.model_factory import build_model
+from src.utils.metrics import ModelEvaluator
+import configs.config as cfg
 
 def run_evaluation():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

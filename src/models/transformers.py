@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torchvision.models as models
-import config as cfg
+import configs.config as cfg
 
 def get_vit_baseline(num_classes=5, pretrained=True):
     """

@@ -1,11 +1,13 @@
-import config as cfg
+import configs.config as cfg
 
-from download_dataset import download_from_kaggle
-from preprocessing import run_preprocessing
-from train import run_training
-from evaluate import run_evaluation
-from dataset_separation import run_dataset_split
-
+from src.data.download_dataset import download_from_kaggle
+from src.data.preprocessing import run_preprocessing
+from src.engine.train import run_training
+from src.engine.evaluate import run_evaluation
+from src.data.dataset_separation import run_dataset_split
+from src.engine.grid_search import run_grid_search
+from src.utils.compare import generate_comparison_barchart
+from src.utils.compare_modeltype import plot_model_variants
 def main():
     print("=" * 60)
     print("CANCER CLASSIFICATION PROJECT LAUNCH")
@@ -52,6 +54,10 @@ def main():
         print(">> Running evaluation and generating confusion matrix...")
         run_evaluation()
 
+    elif cfg.MODE == "grid_search":
+        print(f">> Running Grid Search for ({cfg.MODEL_NAME})...")
+        run_grid_search()
+
     elif cfg.MODE == "all":
         print(">> Running full pipeline (Download -> Preprocess -> Train -> Eval)...")
         download_from_kaggle()
@@ -59,6 +65,13 @@ def main():
         if cfg.APPROACH == "baseline":
             run_training()
         run_evaluation()
+
+    elif cfg.MODE == "compare":
+        print(">> Génération des analyses de résultats...")
+        # 1. Compare les variantes d'un même modèle entre elles
+        plot_model_variants()
+        # 2. Compare les meilleurs modèles finaux entre eux
+        generate_comparison_barchart()
 
     else:
         print(f"ERROR: The mode '{cfg.MODE}' defined in config.py is unknown.")

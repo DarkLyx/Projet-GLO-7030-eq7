@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torchvision.models as models
-import config as cfg # [MODIFIÉ]
+import configs.config as cfg # [MODIFIÉ]
 
 class CustomCNN(nn.Module):
     def __init__(self, num_classes=5):

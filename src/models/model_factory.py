@@ -1,10 +1,10 @@
 import torch.optim as optim
-import config as cfg
-from DL_approaches.baselines import build_baselines_model
-from DL_approaches.transformers import build_transformer_model
-from DL_approaches.hybrids import build_hybrid_model
-from DL_approaches.kan import build_kan_model
-from DL_approaches.ssm import build_ssm_model
+import configs.config as cfg
+from src.models.baselines import build_baselines_model
+from src.models.transformers import build_transformer_model
+from src.models.hybrids import build_hybrid_model
+from src.models.kan import build_kan_model
+from src.models.ssm import build_ssm_model
 
 def build_model():
 

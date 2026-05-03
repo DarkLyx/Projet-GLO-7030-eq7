@@ -1,0 +1,2 @@
+model,parameters,flops
+custom_cnn,51.48M,568.40M

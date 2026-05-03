@@ -1,10 +1,7 @@
 import torch
 import torch.nn as nn
-import config as cfg
+import configs.config as cfg
 
-#Luigos pense bien à installer le repo github du ImportError sur ICE
-
-# On importe la couche KAN linéaire (à installer via la communauté)
 try:
     from efficient_kan import KAN as KANLinear
 except ImportError:
@@ -26,7 +23,6 @@ class VisionKAN(nn.Module):
         self.proj = nn.Conv2d(in_channels, embed_dim, kernel_size=patch_size, stride=patch_size)
         self.flatten = nn.Flatten(2)
         
-        # Réseau KAN (remplace les MLP/Transformers classiques)
         # On utilise une couche KAN pour réduire la dimension, puis classifier
         self.kan_block = KANLinear([embed_dim * self.num_patches, 128, num_classes])
 
