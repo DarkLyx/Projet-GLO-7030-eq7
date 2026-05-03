@@ -1,0 +1,35 @@
+\begin{table}[H]
+\centering
+\caption{Rapport de performance --- Approche : \texttt{hybrids}, Modèle : \texttt{maxvit_t}}
+\label{tab:perf_hybrids_maxvit_t}
+\adjustbox{max width=\linewidth}{%
+\begin{tabular}{lr}
+\toprule
+Métrique & Valeur \\
+\midrule
+Accuracy & 0.9912 \\
+Recall (pondéré) & 0.9912 \\
+F1-Score (pondéré) & 0.9912 \\
+AUC-ROC (OVR) & 0.9999 \\
+\bottomrule
+\end{tabular}
+}
+\vspace{0.4cm}
+
+\adjustbox{max width=\linewidth}{%
+\begin{tabular}{lrrrr}
+\toprule
+ & Précision & Rappel & F1 & Support \\
+Classe &  &  &  &  \\
+\midrule
+colon\_aca & 1.0000 & 1.0000 & 1.0000 & 500.0000 \\
+colon\_n & 1.0000 & 1.0000 & 1.0000 & 500.0000 \\
+lung\_aca & 0.9959 & 0.9600 & 0.9776 & 500.0000 \\
+lung\_n & 1.0000 & 1.0000 & 1.0000 & 500.0000 \\
+lung\_scc & 0.9614 & 0.9960 & 0.9784 & 500.0000 \\
+Macro avg & 0.9914 & 0.9912 & 0.9912 & 2500.0000 \\
+Weighted avg & 0.9914 & 0.9912 & 0.9912 & 2500.0000 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
