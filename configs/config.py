@@ -1,17 +1,23 @@
-MODE = "compare" # "download", "preprocess", "train", "eval", "grid_search", "all", "compare"
+MODE = "preprocess" # "download", "preprocess", "train", "eval", "grid_search", "all", "compare"
 
-APPROACH = "baseline" # "baseline", "transformers", "hybrids", "kan", "ssm"
+APPROACH = "ssm" # "baseline", "transformers", "hybrids", "kan", "ssm"
 # Modèles disponibles selon l'approche :
 # - baseline     : "custom_cnn", "resnet18"
 # - transformers : "vit_b_16", "swin_t"
 # - hybrids      : "maxvit_t"
 # - kan          : "vision_kan"
 # - ssm          : "vision_mamba"
-MODEL_NAME = "custom_cnn"  
+MODEL_NAME = "vision_mamba"  
 
 EXPERIMENTS_QUEUE = [
-    {"approach": "baseline", "model": "custom_cnn"},
+    # {"approach": "baseline", "model": "custom_cnn"},
     {"approach": "baseline", "model": "resnet18"},
+    # {"approach": "transformers", "model": "vit_b_16"},
+    # {"approach": "transformers", "model": "swin_t"},
+    # {"approach": "hybrids", "model": "maxvit_t"},
+    # {"approach": "ssm", "model": "vision_mamba"},
+    # {"approach": "kan", "model": "vision_kan"},
+    # {"approach": "ssm", "model": "vision_mamba"},
 ]
 
 
@@ -41,14 +47,15 @@ GRAD_CLIP_MAX_NORM = 1.0     # Valeur max pour "couper" les gradients qui explos
 NUM_CLASSES = len(TASK_CLASSES[TASK])
 
 GRID_SEARCH_PARAMS = [
-    {"LEARNING_RATE": 0.001,  "BATCH_SIZE": 32},
-    {"LEARNING_RATE": 0.0001, "BATCH_SIZE": 32},
-    {"LEARNING_RATE": 0.001,  "BATCH_SIZE": 64}
+    {"OPTIMIZER": "adam", "WEIGHT_DECAY": 0.0001},
+    {"OPTIMIZER": "adam", "WEIGHT_DECAY": 0.001},
+    {"OPTIMIZER": "adamw", "WEIGHT_DECAY": 0.0001},
+    {"OPTIMIZER": "adamw", "WEIGHT_DECAY": 0.001},
 ]
 
 EPOCHS = 20
 BATCH_SIZE = 32
-LEARNING_RATE = 0.001
+LEARNING_RATE = 0.0001
 IMG_SIZE = (224, 224)
 NUM_CLASSES = 5
 

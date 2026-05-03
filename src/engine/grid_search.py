@@ -1,6 +1,33 @@
 import configs.config as cfg
 from src.engine.train import run_training
 
+PARAM_ABBREV = {
+    "LEARNING_RATE": "LR",
+    "BATCH_SIZE":    "BS",
+    "OPTIMIZER":     "OPT",
+    "WEIGHT_DECAY":  "WD",
+    "EPOCHS":        "EP",
+    "IMG_SIZE":      "IMG",
+    "NUM_CLASSES":   "NC",
+}
+
+
+def _format_value(key, value):
+    if key == "IMG_SIZE" and isinstance(value, (tuple, list)):
+        return "x".join(str(v) for v in value)
+    if isinstance(value, float):
+        return f"{value:g}"
+    return str(value)
+
+
+def build_run_name(base_model_name, params):
+    parts = [base_model_name]
+    for key, value in params.items():
+        abbrev = PARAM_ABBREV.get(key, key)
+        parts.append(f"{abbrev}{_format_value(key, value)}")
+    return "_".join(parts)
+
+
 def run_grid_search():
     """
     Lance une série d'entraînements pour le modèle actuellement défini 
@@ -20,7 +47,7 @@ def run_grid_search():
         for key, value in params.items():
             setattr(cfg, key, value)
 
-        run_name = f"{base_model_name}_LR{cfg.LEARNING_RATE}_BS{cfg.BATCH_SIZE}"
+        run_name = build_run_name(base_model_name, params)
         
         try:
             run_training(run_name=run_name)
