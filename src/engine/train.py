@@ -3,8 +3,6 @@ import torch
 import torch.nn as nn
 from tqdm import tqdm
 import pandas as pd
-
-# [NOUVEAU] Import du Scheduler
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
 from src.data_processing.data_loader import get_dataloaders
@@ -47,7 +45,6 @@ def run_training(run_name=None):
     optimizer = get_optimizer(model)
     criterion = nn.CrossEntropyLoss()
 
-    # [NOUVEAU] 1. Initialisation du LR Scheduler
     scheduler = None
     if getattr(cfg, 'USE_LR_SCHEDULER', False):
         scheduler = ReduceLROnPlateau(

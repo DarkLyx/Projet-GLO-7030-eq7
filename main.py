@@ -29,31 +29,6 @@ def main():
         print(">> Running data preprocessing (CLAHE, Resizing)...")
         run_preprocessing() 
 
-    elif cfg.MODE == "train":
-        if cfg.APPROACH == "baseline":
-            print(f">> Running Convolutional Neural Network ({cfg.MODEL_NAME}) approach...")
-            run_training()
-
-        elif cfg.APPROACH == "transformers":
-            print(f">> Running Vision Transformer ({cfg.MODEL_NAME}) approach...")
-            run_training()
-
-        elif cfg.APPROACH == "hybrids":
-            print(f">> Running Hybrids Models ({cfg.MODEL_NAME}) approach...")
-            run_training()
-            
-        elif cfg.APPROACH == "kan":
-            print(">> Running Vision KAN (Kolmogorov-Arnold Networks) approach...")
-            run_training()
-            
-        elif cfg.APPROACH == "ssm":
-            print(">> Running State Space Models (Mamba) approach...")
-            run_training()
-            
-        else:
-            print(f"ERROR: The approach '{cfg.APPROACH}' is unknown for training.")
-            print("Please use 'baseline', 'transformers', 'hybrids', 'kan', or 'ssm'.")
-
     elif cfg.MODE == "eval":
         for i, exp in enumerate(cfg.EXPERIMENTS_QUEUE):
             cfg.APPROACH = exp["approach"]
@@ -137,9 +112,9 @@ def main():
                         with open(destination, 'wb') as f_dest:
                             while chunk := f_source.read(8192):
                                 f_dest.write(chunk)
-                    print(f"✅ Modèle sauvegardé avec succès et prêt pour la comparaison finale !")
+                    print(f" Modèle sauvegardé avec succès et prêt pour la comparaison finale !")
                 except Exception as e:
-                    print(f"❌ Erreur lors de la copie binaire : {e}")
+                    print(f" Erreur lors de la copie binaire : {e}")
                 
                 summary_path = os.path.join("results", "metrics", "champions_summary.csv")
                 champ_df = pd.DataFrame({
@@ -172,7 +147,7 @@ def main():
             print("Graphiques générés avec succès (voir dossier metrics/)")
         except Exception as e:
             print(f"Erreur lors de la génération des graphiques : {e}")
-    elif cfg.MODE == "grid_search":
+    elif cfg.MODE == "train":
         for i, exp in enumerate(cfg.EXPERIMENTS_QUEUE):
             cfg.APPROACH = exp["approach"]
             cfg.MODEL_NAME = exp["model"]

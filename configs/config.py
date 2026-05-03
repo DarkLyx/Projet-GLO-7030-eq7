@@ -1,4 +1,4 @@
-MODE = "preprocess" # "download", "preprocess", "train", "eval", "grid_search", "all", "compare"
+MODE = "preprocess" # "download", "preprocess", "train", "eval","compare", "all"
 
 APPROACH = "ssm" # "baseline", "transformers", "hybrids", "kan", "ssm"
 # Modèles disponibles selon l'approche :
