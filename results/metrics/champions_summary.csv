@@ -1,7 +1,5 @@
 Architecture,Variant,Val_Accuracy,Test_Accuracy
-custom_cnn,custom_cnn_LR0.0001_BS32,99.0,99.12
-resnet18,resnet18_LR0.0001_BS32,100.0,100.0
-swin_t,swin_t_LR0.0001_BS32,99.96,100.0
-maxvit_t,maxvit_t_LR0.0001_BS32,100.0,100.0
-vision_kan,vision_kan_LR0.0001_BS32,95.92,94.8
-vit_b_16,vit_b_16_LR0.0001_BS32,99.68,99.68
+custom_cnn,custom_cnn_OPTadam_WD0.0001,93.7341236240474,95.50118389897396
+resnet18,resnet18_OPTadamw_WD0.001,98.43353090601184,99.76322020520917
+vision_kan,vision_kan_OPTadamw_WD0.001,88.78069432684165,89.344909234412
+vision_mamba,vision_mamba_OPTadamw_WD0.001,95.51227773073666,97.3559589581689
