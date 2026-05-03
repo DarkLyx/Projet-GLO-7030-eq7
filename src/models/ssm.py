@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import configs.config as cfg
+from mamba_ssm import Mamba
 
 class VisionMamba(nn.Module):
     """

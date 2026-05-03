@@ -1,0 +1,3 @@
+[submodule "external/LC25000-clean"]
+	path = external/LC25000-clean
+	url = https://github.com/GeorgeBatch/LC25000-clean
