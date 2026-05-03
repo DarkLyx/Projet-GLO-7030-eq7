@@ -67,7 +67,7 @@ def main():
             # 2. Lancement de l'entraînement
             # On passe MODEL_NAME comme run_name pour que les fichiers soient bien nommés
             try:
-                run_training(run_name=cfg.MODEL_NAME)
+                run_grid_search(run_name=cfg.MODEL_NAME)
             except Exception as e:
                 print(f" Erreur sur {cfg.MODEL_NAME}: {e}")
                 continue # On passe au suivant si ça crash
