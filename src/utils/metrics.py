@@ -45,15 +45,16 @@ class ModelEvaluator:
         print(f"F1-Score (Pondéré)           : {f1:.4f}")
         print(f"AUC-ROC (OVR)                : {auc:.4f}\n")
 
+      # 1. On calcule la matrice
         cm = confusion_matrix(y_true, y_pred)
+        
+        # 2. On crée le dossier s'il n'existe pas
         cm_dir = os.path.join(self.base_save_dir, "confusion_matrix")
         os.makedirs(cm_dir, exist_ok=True)
         
-        df_cm = pd.DataFrame(cm, index=self.class_names, columns=self.class_names)
-        df_cm.to_csv(os.path.join(cm_dir, f"{self.model_name}_cm.csv"))
-        
+        # 3. ON NE FAIT QUE DESSINER ! (Suppression de df_cm.to_csv)
         self._plot_confusion_matrix(cm, cm_dir)
-
+        
     def _plot_confusion_matrix(self, cm, save_dir):
         plt.figure(figsize=(10, 8))
         sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 

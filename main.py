@@ -8,6 +8,10 @@ from src.data_processing.dataset_separation import run_dataset_split
 from src.engine.grid_search import run_grid_search
 from src.utils.compare import generate_comparison_barchart
 from src.utils.compare_modeltype import plot_model_variants
+import os
+import pandas as pd
+import glob
+
 def main():
     print("=" * 60)
     print("CANCER CLASSIFICATION PROJECT LAUNCH")
@@ -51,9 +55,100 @@ def main():
             print("Please use 'baseline', 'transformers', 'hybrids', 'kan', or 'ssm'.")
 
     elif cfg.MODE == "eval":
-        print(">> Running evaluation and generating confusion matrix...")
-        run_evaluation()
+        for i, exp in enumerate(cfg.EXPERIMENTS_QUEUE):
+            cfg.APPROACH = exp["approach"]
+            cfg.MODEL_NAME = exp["model"]
+            
+            print(f"\n" + "="*60)
+            print(f"📊 TOURNOI GLOBAL (VAL + TEST) : {cfg.MODEL_NAME} ({i+1}/{len(cfg.EXPERIMENTS_QUEUE)})")
+            print("="*60)
+            
+            # 1. On cherche toutes les variantes .pth de ce modèle
+            pattern = os.path.join(cfg.CHECKPOINT_DIR, f"best_{cfg.MODEL_NAME}*.pth")
+            model_files = glob.glob(pattern)
+            
+            # On exclut le fichier final canonique (ex: best_resnet18.pth) s'il existe déjà
+            nom_canonique = f"best_{cfg.MODEL_NAME}.pth"
+            model_files = [f for f in model_files if os.path.basename(f) != nom_canonique]
 
+            if not model_files:
+                print(f"⚠️ Aucun checkpoint variante trouvé pour {cfg.MODEL_NAME}.")
+                continue
+                
+            best_run_name = None
+            best_combined_score = -1.0 # Le score maximum sera sur 200 (100% Val + 100% Test)
+            best_pth_path = None
+            
+            dossier_historique = os.path.join("results", "metrics", "training_history")
+            
+            # 2. Tournoi : On évalue chaque variante
+            for file_path in model_files:
+                filename = os.path.basename(file_path)
+                run_name = filename.replace("best_", "").replace(".pth", "")
+                
+                print(f"\n>> Analyse du candidat : {run_name}")
+                
+                # --- A. Score de Validation (depuis le CSV) ---
+                val_acc_percent = 0.0
+                csv_path = os.path.join(dossier_historique, f"{run_name}_training_history.csv")
+                try:
+                    if os.path.exists(csv_path):
+                        df = pd.read_csv(csv_path)
+                        if 'val_acc' in df.columns:
+                            val_acc_percent = df['val_acc'].max()
+                except Exception as e:
+                    print(f"   ⚠️ Erreur CSV : {e}")
+                    
+                # --- B. Score de Test (En lançant l'évaluation) ---
+                # run_evaluation nous renvoie un score entre 0 et 1 (ex: 0.9872)
+                test_acc_raw = run_evaluation(run_name=run_name)
+                
+                if test_acc_raw is None:
+                    continue
+                    
+                # On le met en pourcentage (ex: 98.72) pour l'additionner à la Validation
+                test_acc_percent = test_acc_raw * 100.0
+                
+                # --- C. Le Score Combiné ---
+                combined_score = val_acc_percent + test_acc_percent
+                
+                print(f"   📊 Val: {val_acc_percent:.2f}% | Test: {test_acc_percent:.2f}% | Total: {combined_score:.2f} / 200")
+                
+                # Si ce candidat bat le record, il devient le nouveau roi
+                if combined_score > best_combined_score:
+                    best_combined_score = combined_score
+                    best_run_name = run_name
+                    best_pth_path = file_path
+                    
+            # 3. Couronnement et copie binaire
+            if best_run_name and best_pth_path:
+                print("\n" + "-" * 15)
+                print(f"🥇 LE GAGNANT ABSOLU (VAL+TEST) EST :")
+                print(f"   {best_run_name}")
+                print(f"📈 SCORE TOTAL : {best_combined_score:.2f} / 200")
+                print("-" * 15 + "\n")
+                
+                destination = os.path.join(cfg.CHECKPOINT_DIR, nom_canonique)
+                print(f"💾 Copie binaire en cours vers {nom_canonique} ...")
+                
+                try:
+                    with open(best_pth_path, 'rb') as f_source:
+                        with open(destination, 'wb') as f_dest:
+                            while chunk := f_source.read(8192):
+                                f_dest.write(chunk)
+                    print(f"✅ Modèle sauvegardé avec succès et prêt pour la comparaison finale !")
+                except Exception as e:
+                    print(f"❌ Erreur lors de la copie binaire : {e}")
+                print("\n" + "="*60)
+        print("📊 GÉNÉRATION DES GRAPHIQUES DE VARIANTES (INTRA-MODÈLE)")
+        print("="*60)
+        try:
+            # On appelle ta fonction qui va dessiner les graphiques
+            plot_model_variants()
+            print("✅ Graphiques générés avec succès (voir dossier metrics/)")
+        except Exception as e:
+            print(f"⚠️ Erreur lors de la génération des graphiques : {e}")
+                
     elif cfg.MODE == "grid_search":
         for i, exp in enumerate(cfg.EXPERIMENTS_QUEUE):
             # 1. On définit l'architecture actuelle pour TOUT le projet

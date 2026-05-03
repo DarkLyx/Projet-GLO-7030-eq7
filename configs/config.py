@@ -1,4 +1,4 @@
-MODE = "grid_search" # "download", "preprocess", "train", "eval", "grid_search", "all", "compare"
+MODE = "compare" # "download", "preprocess", "train", "eval", "grid_search", "all", "compare"
 
 APPROACH = "baseline" # "baseline", "transformers", "hybrids", "kan", "ssm"
 # Modèles disponibles selon l'approche :
@@ -10,8 +10,8 @@ APPROACH = "baseline" # "baseline", "transformers", "hybrids", "kan", "ssm"
 MODEL_NAME = "custom_cnn"  
 
 EXPERIMENTS_QUEUE = [
-    {"approach": "hybrids", "model": "maxvit_t"},
-    {"approach": "baseline", "model": "resnet18"}
+    {"approach": "baseline", "model": "custom_cnn"},
+    {"approach": "baseline", "model": "resnet18"},
 ]
 
 

@@ -2,27 +2,33 @@ import configs.config as cfg
 from src.engine.train import run_training
 
 def run_grid_search():
-    print("=" * 60)
-    print(f"LANCEMENT DU GRID SEARCH POUR : {cfg.MODEL_NAME}")
-    print(f"Nombre de combinaisons à tester : {len(cfg.GRID_SEARCH_PARAMS)}")
-    print("=" * 60)
+    """
+    Lance une série d'entraînements pour le modèle actuellement défini 
+    dans cfg.MODEL_NAME en utilisant la grille d'hyperparamètres.
+    """
+    print("\n" + "-" * 30)
+    print(f"DÉMARRAGE GRID SEARCH : {cfg.MODEL_NAME}")
+    print(f"Famille d'approche   : {cfg.APPROACH}")
+    print(f"Nombre de combinaisons : {len(cfg.GRID_SEARCH_PARAMS)}")
+    print("-" * 30)
 
     base_model_name = cfg.MODEL_NAME
 
     for i, params in enumerate(cfg.GRID_SEARCH_PARAMS):
-        print(f"\n\n>>> EXPÉRIENCE [{i+1}/{len(cfg.GRID_SEARCH_PARAMS)}]")
-        print(f">>> Paramètres appliqués : {params}")
+        print(f"\n[Combo {i+1}/{len(cfg.GRID_SEARCH_PARAMS)}] Paramètres : {params}")
 
-        # 1. Mise à jour dynamique des variables dans config.py
         for key, value in params.items():
             setattr(cfg, key, value)
 
-        # 2. Création du nom unique pour cette expérience
         run_name = f"{base_model_name}_LR{cfg.LEARNING_RATE}_BS{cfg.BATCH_SIZE}"
         
-        # 3. Lancement de l'entraînement
-        run_training(run_name=run_name)
+        try:
+            run_training(run_name=run_name)
+            print(f" Terminé : {run_name}")
+        except Exception as e:
+            print(f" Erreur sur {run_name} : {e}")
+            continue 
 
     print("\n" + "=" * 60)
-    print("GRID SEARCH TERMINÉ !")
-    print("Consultez le fichier global_complexity_comparison.csv et le dossier metrics/")
+    print(f"GRID SEARCH TERMINÉ POUR {base_model_name} !")
+    print("=" * 60)
