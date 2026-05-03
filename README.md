@@ -15,7 +15,7 @@ Le framework est segmenté de manière modulaire pour séparer la donnée, la lo
 │   └── config.py               # Le "cerveau" : hyperparamètres et réglages du pipeline
 │
 ├── 📁 src/                     # 🧠 Code Source
-│   ├── 📁 data/                # Pipeline de données (Download, Split, Preprocess, Loader)
+│   ├── 📁 data_processing/     # Pipeline de données (Download, Split, Preprocess, Loader)
 │   ├── 📁 models/              # Zoo de modèles (Baseline, Transformers, Hybrids, SSM, KAN)
 │   ├── 📁 engine/              # Moteurs d'exécution (Train, Evaluate, Grid Search)
 │   └── 📁 utils/               # Outillage (Metrics, Visualizer, Complexity, FLOPs)

@@ -1,2 +1,3 @@
 model,parameters,flops
 custom_cnn,51.48M,568.40M
+custom_cnn_LR0.001_BS32,51.48M,568.40M

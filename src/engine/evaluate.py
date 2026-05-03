@@ -3,7 +3,7 @@ import torch.nn.functional as F
 import os
 from tqdm import tqdm
 
-from src.data.data_loader import get_dataloaders
+from src.data_processing.data_loader import get_dataloaders
 from src.models.model_factory import build_model
 from src.utils.metrics import ModelEvaluator
 import configs.config as cfg

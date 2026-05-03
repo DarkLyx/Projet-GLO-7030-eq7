@@ -7,7 +7,7 @@ import pandas as pd
 # [NOUVEAU] Import du Scheduler
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
-from src.data.data_loader import get_dataloaders
+from src.data_processing.data_loader import get_dataloaders
 from src.utils.visualizer import plot_training_history
 from src.utils.complexity import compute_model_complexity 
 from src.models.model_factory import build_model, get_optimizer

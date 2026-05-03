@@ -1,10 +1,10 @@
 import configs.config as cfg
 
-from src.data.download_dataset import download_from_kaggle
-from src.data.preprocessing import run_preprocessing
+from src.data_processing.download_dataset import download_from_kaggle
+from src.data_processing.preprocessing import run_preprocessing
 from src.engine.train import run_training
 from src.engine.evaluate import run_evaluation
-from src.data.dataset_separation import run_dataset_split
+from src.data_processing.dataset_separation import run_dataset_split
 from src.engine.grid_search import run_grid_search
 from src.utils.compare import generate_comparison_barchart
 from src.utils.compare_modeltype import plot_model_variants
