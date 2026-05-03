@@ -9,6 +9,12 @@ APPROACH = "baseline" # "baseline", "transformers", "hybrids", "kan", "ssm"
 # - ssm          : "vision_mamba"
 MODEL_NAME = "custom_cnn"  
 
+EXPERIMENTS_QUEUE = [
+    {"approach": "hybrids", "model": "maxvit_t"},
+    {"approach": "baseline", "model": "resnet18"}
+]
+
+
 TASK = "all" 
 
 TASK_CLASSES = {

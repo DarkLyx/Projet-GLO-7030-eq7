@@ -51,8 +51,21 @@ def main():
             print("Please use 'baseline', 'transformers', 'hybrids', 'kan', or 'ssm'.")
 
     elif cfg.MODE == "eval":
-        print(">> Running evaluation and generating confusion matrix...")
-        run_evaluation()
+        for i, exp in enumerate(cfg.EXPERIMENTS_QUEUE):
+            cfg.APPROACH = exp["approach"]
+            cfg.MODEL_NAME = exp["model"]
+
+            print(f"\n🎬 EXPÉRIENCE {i+1}/{len(cfg.EXPERIMENTS_QUEUE)}")
+            print(f"🔹 Approche : {cfg.APPROACH} | Modèle : {cfg.MODEL_NAME}")
+            print("-" * 30)
+
+            try:
+                run_training(run_name=cfg.MODEL_NAME)
+            except Exception as e:
+                print(f"⚠️ Erreur sur {cfg.MODEL_NAME}: {e}")
+                continue 
+
+        print("\nToutes les combinaisons ont été traitées.")
 
     elif cfg.MODE == "grid_search":
         print(f">> Running Grid Search for ({cfg.MODEL_NAME})...")
