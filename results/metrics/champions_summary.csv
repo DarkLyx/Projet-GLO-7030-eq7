@@ -1,0 +1,3 @@
+Architecture,Variant,Val_Accuracy,Test_Accuracy
+custom_cnn,custom_cnn_LR0.0001_BS32,99.0,99.12
+resnet18,resnet18_LR0.0001_BS32,100.0,100.0

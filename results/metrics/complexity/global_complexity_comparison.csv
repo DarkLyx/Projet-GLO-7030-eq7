@@ -1,3 +1,7 @@
 model,parameters,flops
-custom_cnn,51.48M,568.40M
-custom_cnn_LR0.001_BS32,51.48M,568.40M
+custom_cnn_LR0.0001_BS32,51.48M,568.40M
+custom_cnn_LR0.001_BS64,51.48M,568.40M
+maxvit_t_LR0.001_BS32,30.38M,5.46G
+resnet18_LR0.001_BS32,11.18M,1.82G
+resnet18_LR0.0001_BS32,11.18M,1.82G
+resnet18_LR0.001_BS64,11.18M,1.82G
