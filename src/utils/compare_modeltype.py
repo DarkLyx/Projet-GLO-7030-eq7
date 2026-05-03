@@ -24,11 +24,11 @@ def plot_model_variants(metrics_dir="results/metrics"):
     for file in history_files:
         filename = os.path.basename(file)
         full_model_name = filename.replace("_training_history.csv", "")
-        base_model_name = full_model_name.split('_LR')[0]
+        base_model_name = full_model_name.split('_OPT')[0]
         
         # On extrait la partie hyperparamètres pour la légende du graphique
         # Si pas d'hyperparamètres (run normal), on met "Default"
-        variant_name = full_model_name.replace(f"{base_model_name}_", "") if "_LR" in full_model_name else "Default"
+        variant_name = full_model_name.replace(f"{base_model_name}_", "") if "_OPT" in full_model_name else "Default"
         
         architectures[base_model_name].append({
             'variant': variant_name,
