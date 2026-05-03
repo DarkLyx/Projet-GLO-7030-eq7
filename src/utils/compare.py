@@ -2,53 +2,22 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-import glob
 
 def generate_comparison_barchart(metrics_dir="results/metrics"):
-    print(" Génération du graphique de comparaison global (Meilleures versions uniquement)...")
+    print(" Génération du graphique de comparaison global (Champions)...")
     
-    history_dir = os.path.join(metrics_dir, "training_history")
-    accuracy_dir = os.path.join(metrics_dir, "accuracy")
-    test_acc_files = glob.glob(os.path.join(accuracy_dir, "*_accuracy.csv"))
+    summary_path = os.path.join(metrics_dir, "champions_summary.csv")
     
-    if not test_acc_files:
-        print(f" Aucun fichier de Test Accuracy trouvé dans {accuracy_dir}.")
+    if not os.path.exists(summary_path):
+        print(f" Aucun fichier {summary_path} trouvé. Lancez d'abord le mode 'eval' pour élire les champions.")
         return
 
-    best_models = {}
-
-    for test_file in test_acc_files:
-        filename = os.path.basename(test_file)
-        full_model_name = filename.replace("_accuracy.csv", "")
-        
-        base_model_name = full_model_name.split('_LR')[0]
-        
-        df_test = pd.read_csv(test_file)
-        test_acc = df_test['value'].iloc[0] * 100
-        
-        history_file = os.path.join(history_dir, f"{full_model_name}_training_history.csv")
-        if os.path.exists(history_file):
-            df_hist = pd.read_csv(history_file)
-            val_acc = df_hist['val_acc'].max()
-        else:
-            val_acc = 0.0
-
-        # Si cette architecture n'est pas encore enregistrée OU si cette version est meilleure
-        if base_model_name not in best_models or val_acc > best_models[base_model_name]['val_acc']:
-            best_models[base_model_name] = {
-                'full_name': full_model_name,
-                'val_acc': val_acc,
-                'test_acc': test_acc
-            }
-
-    labels = []
-    val_accuracies = []
-    test_accuracies = []
-
-    for base_name, data in best_models.items():
-        labels.append(data['full_name'])
-        val_accuracies.append(data['val_acc'])
-        test_accuracies.append(data['test_acc'])
+    # On lit simplement le registre !
+    df = pd.read_csv(summary_path)
+    
+    labels = df['Variant'].tolist()
+    val_accuracies = df['Val_Accuracy'].tolist()
+    test_accuracies = df['Test_Accuracy'].tolist()
 
     x = np.arange(len(labels))
     width = 0.35
@@ -58,7 +27,7 @@ def generate_comparison_barchart(metrics_dir="results/metrics"):
     rects2 = ax.bar(x + width/2, test_accuracies, width, label='Test Accuracy (Final)', color='#66b3ff', edgecolor='black')
 
     ax.set_ylabel('Précision / Accuracy (%)')
-    ax.set_title('Comparaison des Meilleurs Modèles par Architecture')
+    ax.set_title('Comparaison des Modèles Champions (Val + Test)')
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation=45, ha="right")
     ax.legend(loc='lower right')
@@ -76,7 +45,7 @@ def generate_comparison_barchart(metrics_dir="results/metrics"):
     autolabel(rects2)
 
     fig.tight_layout()
-    save_path = os.path.join(metrics_dir, "comparaison_globale_meilleurs_modeles.png")
+    save_path = os.path.join(metrics_dir, "comparaison_globale_champions.png")
     plt.savefig(save_path)
     plt.close()
     print(f" Graphique global sauvegardé sous : {save_path}")

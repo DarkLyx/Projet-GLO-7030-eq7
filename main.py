@@ -60,7 +60,7 @@ def main():
             cfg.MODEL_NAME = exp["model"]
             
             print(f"\n" + "="*60)
-            print(f"📊 TOURNOI GLOBAL (VAL + TEST) : {cfg.MODEL_NAME} ({i+1}/{len(cfg.EXPERIMENTS_QUEUE)})")
+            print(f" TOURNOI GLOBAL (VAL + TEST) : {cfg.MODEL_NAME} ({i+1}/{len(cfg.EXPERIMENTS_QUEUE)})")
             print("="*60)
             
             # 1. On cherche toutes les variantes .pth de ce modèle
@@ -72,12 +72,14 @@ def main():
             model_files = [f for f in model_files if os.path.basename(f) != nom_canonique]
 
             if not model_files:
-                print(f"⚠️ Aucun checkpoint variante trouvé pour {cfg.MODEL_NAME}.")
+                print(f" Aucun checkpoint variante trouvé pour {cfg.MODEL_NAME}.")
                 continue
                 
             best_run_name = None
             best_combined_score = -1.0 # Le score maximum sera sur 200 (100% Val + 100% Test)
             best_pth_path = None
+            best_val_score = 0.0
+            best_test_score = 0.0
             
             dossier_historique = os.path.join("results", "metrics", "training_history")
             
@@ -88,7 +90,6 @@ def main():
                 
                 print(f"\n>> Analyse du candidat : {run_name}")
                 
-                # --- A. Score de Validation (depuis le CSV) ---
                 val_acc_percent = 0.0
                 csv_path = os.path.join(dossier_historique, f"{run_name}_training_history.csv")
                 try:
@@ -97,39 +98,39 @@ def main():
                         if 'val_acc' in df.columns:
                             val_acc_percent = df['val_acc'].max()
                 except Exception as e:
-                    print(f"   ⚠️ Erreur CSV : {e}")
+                    print(f" Erreur CSV : {e}")
                     
                 # --- B. Score de Test (En lançant l'évaluation) ---
-                # run_evaluation nous renvoie un score entre 0 et 1 (ex: 0.9872)
                 test_acc_raw = run_evaluation(run_name=run_name)
                 
                 if test_acc_raw is None:
                     continue
                     
-                # On le met en pourcentage (ex: 98.72) pour l'additionner à la Validation
+                # On le met en pourcentage pour l'additionner à la Validation
                 test_acc_percent = test_acc_raw * 100.0
                 
                 # --- C. Le Score Combiné ---
                 combined_score = val_acc_percent + test_acc_percent
                 
-                print(f"   📊 Val: {val_acc_percent:.2f}% | Test: {test_acc_percent:.2f}% | Total: {combined_score:.2f} / 200")
+                print(f" Val: {val_acc_percent:.2f}% | Test: {test_acc_percent:.2f}% | Total: {combined_score:.2f} / 200")
                 
                 # Si ce candidat bat le record, il devient le nouveau roi
                 if combined_score > best_combined_score:
                     best_combined_score = combined_score
                     best_run_name = run_name
                     best_pth_path = file_path
+                    best_val_score = val_acc_percent
+                    best_test_score = test_acc_percent
                     
             # 3. Couronnement et copie binaire
             if best_run_name and best_pth_path:
                 print("\n" + "-" * 15)
-                print(f"🥇 LE GAGNANT ABSOLU (VAL+TEST) EST :")
+                print(f"LE GAGNANT ABSOLU (VAL+TEST) EST :")
                 print(f"   {best_run_name}")
-                print(f"📈 SCORE TOTAL : {best_combined_score:.2f} / 200")
+                print(f"SCORE TOTAL : {best_combined_score:.2f} / 200")
                 print("-" * 15 + "\n")
                 
                 destination = os.path.join(cfg.CHECKPOINT_DIR, nom_canonique)
-                print(f"💾 Copie binaire en cours vers {nom_canonique} ...")
                 
                 try:
                     with open(best_pth_path, 'rb') as f_source:
@@ -139,19 +140,40 @@ def main():
                     print(f"✅ Modèle sauvegardé avec succès et prêt pour la comparaison finale !")
                 except Exception as e:
                     print(f"❌ Erreur lors de la copie binaire : {e}")
-                print("\n" + "="*60)
-        print("📊 GÉNÉRATION DES GRAPHIQUES DE VARIANTES (INTRA-MODÈLE)")
+                
+                summary_path = os.path.join("results", "metrics", "champions_summary.csv")
+                champ_df = pd.DataFrame({
+                    'Architecture': [cfg.MODEL_NAME],
+                    'Variant': [best_run_name],
+                    'Val_Accuracy': [best_val_score],
+                    'Test_Accuracy': [best_test_score]
+                })
+                
+                try:
+                    # On ajoute ou on met à jour le registre
+                    if os.path.exists(summary_path):
+                        df_existing = pd.read_csv(summary_path)
+                        # On supprime l'ancien champion de cette architecture s'il y en avait un
+                        df_existing = df_existing[df_existing['Architecture'] != cfg.MODEL_NAME]
+                        df_final = pd.concat([df_existing, champ_df], ignore_index=True)
+                    else:
+                        df_final = champ_df
+                        
+                    df_final.to_csv(summary_path, index=False)
+                    print(f"Statistiques officielles enregistrées dans le registre des champions !")
+                except Exception as e:
+                    print(f"Erreur lors de la sauvegarde du registre : {e}")
+                    
+        print("\n" + "="*60)
+        print("GÉNÉRATION DES GRAPHIQUES DE VARIANTES (INTRA-MODÈLE)")
         print("="*60)
         try:
-            # On appelle ta fonction qui va dessiner les graphiques
             plot_model_variants()
-            print("✅ Graphiques générés avec succès (voir dossier metrics/)")
+            print("Graphiques générés avec succès (voir dossier metrics/)")
         except Exception as e:
-            print(f"⚠️ Erreur lors de la génération des graphiques : {e}")
-                
+            print(f"Erreur lors de la génération des graphiques : {e}")
     elif cfg.MODE == "grid_search":
         for i, exp in enumerate(cfg.EXPERIMENTS_QUEUE):
-            # 1. On définit l'architecture actuelle pour TOUT le projet
             cfg.APPROACH = exp["approach"]
             cfg.MODEL_NAME = exp["model"]
 
@@ -160,8 +182,6 @@ def main():
             print(f"Modèle {i+1} sur {len(cfg.EXPERIMENTS_QUEUE)}")
             print("="*60)
 
-            # 2. On appelle le moteur de Grid Search. 
-            # Note : On ne passe PAS de run_name ici, car grid_search le génère lui-même.
             try:
                 run_grid_search()
             except Exception as e:
@@ -178,8 +198,6 @@ def main():
 
     elif cfg.MODE == "compare":
         print(">> Génération des analyses de résultats...")
-        # 1. Compare les variantes d'un même modèle entre elles
-        plot_model_variants()
         # 2. Compare les meilleurs modèles finaux entre eux
         generate_comparison_barchart()
 
