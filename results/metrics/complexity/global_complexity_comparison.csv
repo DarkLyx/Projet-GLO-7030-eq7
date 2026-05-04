@@ -24,3 +24,7 @@ swin_t_OPTadam_WD0.0001,18.86M,2.98G
 swin_t_OPTadam_WD0.001,18.86M,2.98G
 swin_t_OPTadamw_WD0.0001,18.86M,2.98G
 swin_t_OPTadamw_WD0.001,18.86M,2.98G
+maxvit_t_OPTadam_WD0.0001,30.38M,5.46G
+maxvit_t_OPTadam_WD0.001,30.38M,5.46G
+maxvit_t_OPTadamw_WD0.0001,30.38M,5.46G
+maxvit_t_OPTadamw_WD0.001,30.38M,5.46G
